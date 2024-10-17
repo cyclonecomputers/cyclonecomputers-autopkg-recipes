@@ -40,6 +40,30 @@ There is no specific conventions required for commit messages except for the fol
 - Must contain a useful statement describing the changes made.
 - Prefer to keep messages under 50 characters and always under 70.
 
+## Pre-Commit Hooks
+This repository uses pre-commit hooks to validate and fix common errors before code is committed to the repository. Please install and use these hooks to ensure that code meets the requirements of this repository.
+
+### Install
+To use these hooks, you first need to install pre-commit using the instructions here: https://pre-commit.com/#install
+
+On macOS with homebrew:
+```
+brew install pre-commit
+```
+
+### Activate
+Make sure to activate the repo hooks for your local repository BEFORE making any commits.
+```
+cd /path/to/cyclonecomputers-autopkg-recipes
+pre-commit install
+```
+
+### Running Checks
+Pre-commit checks will run automatically every time you make a commit to the repository (whether using the CLI tools or a GUI such as Fork). If you wish to run all tests manually you can use the command:
+```
+pre-commit run --all-files
+```
+
 ## Versioning
 If you are using version numbers for documents or code please use [Semantic Versioning](https://semver.org) wherever possible.
 
