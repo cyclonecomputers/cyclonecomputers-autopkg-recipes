@@ -14,4 +14,4 @@ Many of our recipes have parent recipes that live in another repo. Refer to a gi
 If you're having a problem with one of my recipes, [check the issues](https://github.com/cyclonecomputers/cyclonecomputers-autopkg-recipes/issues) to see whether a known problem exists. If not, please [submit an issue](https://github.com/cyclonecomputers/cyclonecomputers-autopkg-recipes/issues/new) so we can investigate.
 
 ## Submissions
-Forks/pulls/issues are welcome.
+Forks/pulls/issues are welcome. Please read the [CONTRIBUTE](/CONTRIBUTE.md) file for additional information and guidelines.
