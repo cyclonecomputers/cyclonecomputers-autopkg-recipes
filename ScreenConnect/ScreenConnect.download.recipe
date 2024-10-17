@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the current ConnectWise ScreenConnect (formerly ConnectWise Control)
+    installer for a specific company.
+
+    You can use the input variables to specify the specific Company, Site, and/or
+    Department which will be used to build the installer. These values get substituted
+    into the server specific download URL. Any/all of these three values can be left blank
+    if they are not used.
+
+    The SERVER_URL input variable must be supplied in an override because it will be
+    specific to a given ScreenConnect installation. The server url should include the
+    protocol (http or https) as well as any port numbers if required.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.ScreenConnect</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>ScreenConnect</string>
+		<key>SERVER_URL</key>
+		<string>needs-to-be-added-in-override</string>
+		<key>COMPANY_NAME</key>
+		<string></string>
+		<key>SITE_NAME</key>
+		<string></string>
+		<key>DEPARTMENT_NAME</key>
+		<string></string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0</string>
+	<key>Process</key>
+	<array>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>server_url</key>
+                <string>%SERVER_URL%</string>
+                <key>company_name</key>
+                <string>%COMPANY_NAME%</string>
+                <key>site_name</key>
+                <string>%SITE_NAME%</string>
+                <key>department_name</key>
+                <string>%DEPARTMENT_NAME%</string>
+            </dict>
+            <key>Processor</key>
+            <string>ScreenConnectURLProvider</string>
+        </dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>filename</key>
+                <string>%NAME%.pkg</string>
+            </dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+            <key>Processor</key>
+            <string>FlatPkgUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>flat_pkg_path</key>
+                <string>%pathname%</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>PkgPayloadUnpacker</string>
+            <key>Arguments</key>
+            <dict>
+                <key>pkg_payload_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack/Payload</string>
+                <key>destination_path</key>
+                <string>%RECIPE_CACHE_DIR%/unpack</string>
+            </dict>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>FileFinder</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pattern</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/Applications/connectwise*.app</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%found_filename%</string>
+				<key>requirement</key>
+				<string>identifier "com.screenconnect.client.access" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = K8M3XDZV9Y</string>
+			</dict>
+		</dict>
+        <dict>
+            <key>Arguments</key>
+            <dict>
+                <key>info_path</key>
+                <string>%found_filename%/Contents/Info.plist</string>
+                <key>plist_keys</key>
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>bundleid</string>
+                    <key>CFBundleVersion</key>
+                    <string>version</string>
+                </dict>
+            </dict>
+            <key>Processor</key>
+            <string>PlistReader</string>
+        </dict>
+		<dict>
+			<key>Processor</key>
+			<string>PathDeleter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>path_list</key>
+				<array>
+					<string>%RECIPE_CACHE_DIR%/unpack</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
