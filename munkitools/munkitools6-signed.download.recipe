@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the signed release of Munki tools version 6
+via the Mac Admins Open Source repo on GitHub. You can set INCLUDE_PRERELEASES
+to any value to have this recipe pull prerelease versions.
+
+This recipe cannot be overridden to pull a download from an alternate location.
+
+The GitHubReleasesInfoProvider processor used by this recipe also
+respects an input variable: 'sort_by_highest_tag_names', which
+if set, will ignore the post dates of the releases and instead sort
+descending by tag names according to LooseVersion semantics.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.munkitools6-signed</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>munkitools</string>
+		<key>INCLUDE_PRERELEASES</key>
+		<string></string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0.0</string>
+	<key>Process</key>
+	<array>
+        <dict>
+            <key>Processor</key>
+            <string>GitHubReleasesInfoProvider</string>
+            <key>Arguments</key>
+            <dict>
+                <key>asset_regex</key>
+                <string>^munkitools-6.*?pkg$</string>
+                <key>github_repo</key>
+                <string>macadmins/munki-builds</string>
+                <key>include_prereleases</key>
+                <string>%INCLUDE_PRERELEASES%</string>
+            </dict>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>URLDownloader</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>EndOfCheckPhase</string>
+        </dict>
+        <dict>
+            <key>Processor</key>
+            <string>CodeSignatureVerifier</string>
+            <key>Arguments</key>
+            <dict>
+                <key>expected_authority_names</key>
+                <array>
+                    <string>Developer ID Installer: Mac Admins Open Source (T4SK8ZXCXG)</string>
+                    <string>Developer ID Certification Authority</string>
+                    <string>Apple Root CA</string>
+                </array>
+                <key>input_path</key>
+                <string>%pathname%</string>
+            </dict>
+        </dict>
+    </array>
+</dict>
+</plist>
