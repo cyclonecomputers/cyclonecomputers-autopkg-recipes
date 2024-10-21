@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Comment</key>
+	<string>Created with Recipe Robot v2.2.0 (https://github.com/homebysix/recipe-robot)</string>
+	<key>Description</key>
+	<string>Downloads the latest version of Lego Education SPIKE v3.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.LegoEducationSPIKE3</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>LegoEducationSPIKE3</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.4.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>re_pattern</key>
+				<string>https:\/\/assets\.education\.lego\.com\/_\/downloads\/SPIKE_APP_3_macOS__[\d.]+_Global\.dmg</string>
+				<key>url</key>
+				<string>https://education.lego.com/page-data/en-us/downloads/spike-app/software/page-data.json</string>
+				<key>result_output_var_name</key>
+				<string>download_url</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>filename</key>
+				<string>%NAME%.dmg</string>
+				<key>url</key>
+				<string>%download_url%</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLDownloader</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_path</key>
+				<string>%pathname%/SPIKE.app</string>
+				<key>requirement</key>
+				<string>anchor apple generic and identifier "com.lego.education.spikenext" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "9YZJD9MXPZ")</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>dmg_path</key>
+				<string>%pathname%</string>
+			</dict>
+			<key>Processor</key>
+			<string>AppDmgVersioner</string>
+		</dict>
+	</array>
+</dict>
+</plist>
