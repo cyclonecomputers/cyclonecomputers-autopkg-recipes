@@ -3,20 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>Creates a pkg file for the current Filemaker Pro licensing installer.
+	<string>Creates a pkg file for the current FileMaker Pro licensing installer.
 
 	You will need to supply a value for the VERSION input variable either inside an
 	override (not recommended) or vie the command-line --key argument. e.g.
-	autopkg run com.github.cyclonecomputers.pkg.FilemakerProClarisLicenseCert --key VERSION=x.x.x
+	autopkg run com.github.cyclonecomputers.pkg.FileMakerProClarisLicenseCert --key VERSION=x.x.x
 
 	You need to set the MAJOR_PRODUCT_VERSION input variable to the appropriate major
 	version of FileMaker that this certificate is valid for. e.g. 19</string>
 	<key>Identifier</key>
-	<string>com.github.cyclonecomputers.pkg.FilemakerProClarisLicenseCert</string>
+	<string>com.github.cyclonecomputers.pkg.FileMakerProClarisLicenseCert</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>FilemakerProClarisLicenseCert</string>
+		<string>FileMakerProClarisLicenseCert</string>
 		<key>PKG_ID</key>
 		<string>com.filemaker.license.%MAJOR_PRODUCT_VERSION%</string>
 		<key>MAJOR_PRODUCT_VERSION</key>
@@ -27,7 +27,7 @@
 	<key>MinimumVersion</key>
 	<string>1.0</string>
 	<key>ParentRecipe</key>
-	<string>com.github.cyclonecomputers.download.FilemakerProClarisLicenseCert</string>
+	<string>com.github.cyclonecomputers.download.FileMakerProClarisLicenseCert</string>
 	<key>Process</key>
 	<array>
 		<dict>

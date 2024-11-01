@@ -6,11 +6,11 @@
 	<string>Stub recipe to accept a LicenseCert.fmcert file for use in later recipes.
 	This is used to build a licensing package for FileMaker Pro 18 and above.</string>
 	<key>Identifier</key>
-	<string>com.github.cyclonecomputers.download.FilemakerProClarisLicenseCert</string>
+	<string>com.github.cyclonecomputers.download.FileMakerProClarisLicenseCert</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>FilemakerProClarisLicenseCert</string>
+		<string>FileMakerProClarisLicenseCert</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>1.0</string>
