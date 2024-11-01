@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Creates a pkg file for the current Filemaker Pro licensing installer.
+
+	You will need to supply a value for the VERSION input variable either inside an
+	override (not recommended) or vie the command-line --key argument. e.g.
+	autopkg run com.github.cyclonecomputers.pkg.FilemakerProClarisLicenseCert --key VERSION=x.x.x
+
+	You need to set the MAJOR_PRODUCT_VERSION input variable to the appropriate major
+	version of FileMaker that this certificate is valid for. e.g. 19</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.pkg.FilemakerProClarisLicenseCert</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>FilemakerProClarisLicenseCert</string>
+		<key>PKG_ID</key>
+		<string>com.filemaker.license.%MAJOR_PRODUCT_VERSION%</string>
+		<key>MAJOR_PRODUCT_VERSION</key>
+		<string>19</string>
+		<key>version</key>
+		<string>%VERSION%</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0</string>
+	<key>ParentRecipe</key>
+	<string>com.github.cyclonecomputers.download.FilemakerProClarisLicenseCert</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%/payload/Users/Shared/FileMaker/FileMaker Pro/%MAJOR_PRODUCT_VERSION%.0</string>
+				<key>pkgdirs</key>
+				<dict/>
+			</dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>source_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/LicenseCert.fmcert</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/payload/Users/Shared/FileMaker/FileMaker Pro/%MAJOR_PRODUCT_VERSION%.0/LicenseCert.fmcert</string>
+			</dict>
+			<key>Processor</key>
+			<string>Copier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_request</key>
+				<dict>
+					<key>chown</key>
+					<array>
+						<dict>
+							<key>path</key>
+							<string>Users</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>admin</string>
+							<key>mode</key>
+							<string>0755</string>
+						</dict>
+						<dict>
+							<key>path</key>
+							<string>Users/Shared</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>wheel</string>
+							<key>mode</key>
+							<string>0777</string>
+						</dict>
+						<dict>
+							<key>path</key>
+							<string>Users/Shared/FileMaker</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>admin</string>
+							<key>mode</key>
+							<string>0777</string>
+						</dict>
+						<dict>
+							<key>path</key>
+							<string>Users/Shared/FileMaker/FileMaker Pro</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>admin</string>
+							<key>mode</key>
+							<string>0777</string>
+						</dict>
+						<dict>
+							<key>path</key>
+							<string>Users/Shared/FileMaker/FileMaker Pro/%MAJOR_PRODUCT_VERSION%.0</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>admin</string>
+							<key>mode</key>
+							<string>0777</string>
+						</dict>
+						<dict>
+							<key>path</key>
+							<string>Users/Shared/FileMaker/FileMaker Pro/%MAJOR_PRODUCT_VERSION%.0/LicenseCert.fmcert</string>
+							<key>user</key>
+							<string>root</string>
+							<key>group</key>
+							<string>admin</string>
+							<key>mode</key>
+							<string>0777</string>
+						</dict>
+					</array>
+					<key>pkgroot</key>
+					<string>%RECIPE_CACHE_DIR%/payload</string>
+					<key>id</key>
+					<string>%PKG_ID%</string>
+					<key>options</key>
+					<string>purge_ds_store</string>
+					<key>pkgdir</key>
+					<string>%RECIPE_CACHE_DIR%</string>
+					<key>pkgname</key>
+					<string>%NAME%-%VERSION%</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>PkgCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>path_list</key>
+				<array>
+					<string>%RECIPE_CACHE_DIR%/payload</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>PathDeleter</string>
+		</dict>
+	</array>
+</dict>
+</plist>
