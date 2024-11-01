@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Stub recipe to accept a LicenseCert.fmcert file for use in later recipes.
+	This is used to build a licensing package for FileMaker Pro 18 and above.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.FilemakerProClarisLicenseCert</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>FilemakerProClarisLicenseCert</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>PackageRequired</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%</string>
+				<key>pkgdirs</key>
+				<dict>
+					<key>downloads</key>
+					<string>0755</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>source_path</key>
+				<string>%PKG%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/LicenseCert.fmcert</string>
+				<key>overwrite</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>Copier</string>
+		</dict>
+	</array>
+</dict>
+</plist>
