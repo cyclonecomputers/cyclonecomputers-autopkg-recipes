@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Stub recipe to accept the supplied PCClient.app for use in later recipes.
+
+To obtain the PCClient application you need to look on the Papercut server in the
+directory C:\Program Files\PaperCut MF\client\PCClient.app.
+
+It is recommended that you zip this file before copying it to a Mac for packaging.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.PCClient</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>PCClient</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>PackageRequired</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>source_path</key>
+				<string>%PKG%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/PCClient.app</string>
+				<key>overwrite</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>Copier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>input_plist_path</key>
+				<string>%destination_path%/Contents/Info.plist</string>
+				<key>plist_version_key</key>
+				<string>CFBundleShortVersionString</string>
+			</dict>
+			<key>Processor</key>
+			<string>Versioner</string>
+		</dict>
+	</array>
+</dict>
+</plist>
