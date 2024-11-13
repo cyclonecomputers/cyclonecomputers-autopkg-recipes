@@ -21,7 +21,22 @@
 				<key>url</key>
 				<string>https://release.lightburnsoftware.com/LightBurn/Release/latest/</string>
 				<key>re_pattern</key>
+				<string>/LightBurn/Release/LightBurn-v([0-9\.]+)/LightBurn.V[0-9\.]+.dmg</string>
+				<key>result_output_var_name</key>
+				<string>version</string>
+			</dict>
+			<key>Processor</key>
+			<string>URLTextSearcher</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>url</key>
+				<string>https://release.lightburnsoftware.com/LightBurn/Release/latest/</string>
+				<key>re_pattern</key>
 				<string>/LightBurn/Release/LightBurn-v[0-9\.]+/LightBurn.V[0-9\.]+.dmg</string>
+				<key>result_output_var_name</key>
+				<string>match</string>
 			</dict>
 			<key>Processor</key>
 			<string>URLTextSearcher</string>
@@ -51,17 +66,6 @@
 			</dict>
 			<key>Processor</key>
 			<string>CodeSignatureVerifier</string>
-		</dict>
-		<dict>
-			<key>Arguments</key>
-			<dict>
-				<key>input_plist_path</key>
-				<string>%pathname%/LightBurn.app/Contents/Info.plist</string>
-				<key>plist_version_key</key>
-				<string>CFBundleShortVersionString</string>
-			</dict>
-			<key>Processor</key>
-			<string>Versioner</string>
 		</dict>
 	</array>
 </dict>
