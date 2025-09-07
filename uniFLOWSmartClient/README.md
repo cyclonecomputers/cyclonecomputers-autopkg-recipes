@@ -5,6 +5,9 @@ This recipe is adapted from the instructions provided by user andymason on the [
 
 I also note that there is an [existing recipe for uniFLOW in the MLBZ521-recipes repository](https://github.com/autopkg/MLBZ521-recipes/tree/master/uniFLOW) but this relies the ISO being saved to a local file path rather than just being passed at the command line.
 
+## Dependencies
+The `.pkg` recipe has a dependency on the [grahampugh-recipes](https://github.com/autopkg/grahampugh-recipes) repository in order to use his `com.github.grahampugh.recipes.commonprocessors/ChangeModeOwner` custom processor. Make sure you have added this repository to your AutoPkg installation before running this recipe (`autopkg repo-add grahampugh-recipes`).
+
 ## Usage
 In order to use these recipes you will need to obtain a copy of the uniFLOW client installer ISO.
 
