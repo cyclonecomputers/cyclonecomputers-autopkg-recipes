@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Stub recipe to accept the supplied SmartClient.iso for use in later recipes.
+
+To obtain the PCClient application Log into your Uniflow Online (web) and navigate to "Start Printing" (Side Bar)
+Click [Download macOS printer driver] to download the iso file.</string>
+	<key>Identifier</key>
+	<string>com.github.cyclonecomputers.download.uniFLOWSmartClient</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>uniFLOWSmartClient</string>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>1.0</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>PackageRequired</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>EndOfCheckPhase</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkgroot</key>
+				<string>%RECIPE_CACHE_DIR%/downloads</string>
+				<key>pkgdirs</key>
+				<dict/>
+			</dict>
+			<key>Processor</key>
+			<string>PkgRootCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>source_path</key>
+				<string>%PKG%</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/downloads/SmartClient.iso</string>
+				<key>overwrite</key>
+				<true/>
+			</dict>
+			<key>Processor</key>
+			<string>Copier</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>expected_authority_names</key>
+				<array>
+					<string>Developer ID Installer: NT-WARE Systemprogrammierungs-GmbH (4M6FV5A8E6)</string>
+					<string>Developer ID Certification Authority</string>
+					<string>Apple Root CA</string>
+				</array>
+				<key>input_path</key>
+				<string>%destination_path%/SmartClientForMac.pkg</string>
+			</dict>
+			<key>Processor</key>
+			<string>CodeSignatureVerifier</string>
+		</dict>
+	</array>
+</dict>
+</plist>
